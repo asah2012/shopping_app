@@ -1,31 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../provider/cart.dart';
+import '../provider/product.dart';
+import '../screens/cart_screen.dart';
 
 class ProductItem extends StatelessWidget {
-  final String id;
-  final String title;
-  final String imageURL;
+  //  final String id;
+  // final String title;
+  // final String imageURL;
 
-  ProductItem({required this.id, required this.title, required this.imageURL});
+  // ProductItem({required this.id, required this.title, required this.imageURL});
 
   @override
   Widget build(BuildContext context) {
+    Product productItem = Provider.of<Product>(context);
+    //var favProductList = Provider.of<FavoriteProduct>(context);
     return ClipRRect(
       borderRadius: BorderRadius.circular(20.0),
       child: GridTile(
         footer: GridTileBar(
           backgroundColor: Colors.black38,
-          leading: IconButton(
-            icon: const Icon(Icons.shopping_bag),
-            onPressed: () {},
+          leading: Consumer<Cart>(
+              builder: (context, cart, child) => Badge(
+                    backgroundColor: Colors.amberAccent,
+                    label: Text('${cart.cartItemCount(productItem)}'),
+                    child: IconButton(
+                      icon: const Icon(Icons.shopping_bag),
+                      onPressed: () => cart.addProductToCart(productItem),
+                    ),
+                  )),
+          title: Text(
+            productItem.title,
+            textAlign: TextAlign.center,
           ),
           trailing: IconButton(
-            icon: const Icon(Icons.favorite_border),
-            onPressed: () {},
+            color: Colors.redAccent,
+            icon: Icon(productItem.isFavorite
+                ? Icons.favorite
+                : Icons.favorite_border),
+            onPressed: () => productItem.toggleFavorite(),
           ),
         ),
         child: GestureDetector(
           onTap: () {},
-          child: Image.network(imageURL, fit: BoxFit.contain),
+          child: Image.network(productItem.imageUrl, fit: BoxFit.contain),
         ),
       ),
     );
