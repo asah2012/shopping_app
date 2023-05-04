@@ -25,9 +25,18 @@ class ProductItem extends StatelessWidget {
                     backgroundColor: Colors.amberAccent,
                     label: Text('${cart.cartItemCount(productItem)}'),
                     child: IconButton(
-                      icon: const Icon(Icons.shopping_bag),
-                      onPressed: () => cart.addProductToCart(productItem),
-                    ),
+                        icon: const Icon(Icons.shopping_bag),
+                        onPressed: () {
+                          cart.addProductToCart(productItem);
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text(
+                                "Item ${productItem.title} is added to the cart"),
+                            action: SnackBarAction(
+                                label: "UNDO",
+                                onPressed: () => cart
+                                    .decrementCartItemByProduct(productItem)),
+                          ));
+                        }),
                   )),
           title: Text(
             productItem.title,

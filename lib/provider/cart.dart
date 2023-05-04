@@ -56,4 +56,17 @@ class Cart with ChangeNotifier {
     cartItems.removeWhere((ci) => ci.productItem.id == prd.id);
     notifyListeners();
   }
+
+  void decrementCartItemByCartItemId(CartItem ci) {
+    CartItem item =
+        cartItems.firstWhere((cix) => cix.productItem.id == ci.productItem.id);
+    item.decrementQty();
+    notifyListeners();
+  }
+
+  void decrementCartItemByProduct(Product prd) {
+    CartItem item = cartItems.firstWhere((cix) => cix.productItem.id == prd.id);
+    item.decrementQty();
+    notifyListeners();
+  }
 }

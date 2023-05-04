@@ -22,6 +22,10 @@ class CartItem {
     _qty++;
   }
 
+  void decrementQty() {
+    _qty--;
+  }
+
   double totalPrice() {
     return qty * (productItem.price);
   }
