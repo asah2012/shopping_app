@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import './product.dart';
 import './cart_item.dart';
+import 'order.dart';
 
 class Cart with ChangeNotifier {
   List<CartItem> _cartItems = [];
@@ -31,6 +32,14 @@ class Cart with ChangeNotifier {
     } else {
       return 0;
     }
+  }
+
+  int totalUnitsInCart() {
+    int unitCount = 0;
+    for (int i = 0; i < cartItems.length; i++) {
+      unitCount += cartItemCount(cartItems[i].productItem);
+    }
+    return unitCount;
   }
 
   int itemsInCart() {
@@ -67,6 +76,19 @@ class Cart with ChangeNotifier {
   void decrementCartItemByProduct(Product prd) {
     CartItem item = cartItems.firstWhere((cix) => cix.productItem.id == prd.id);
     item.decrementQty();
+    notifyListeners();
+  }
+
+  int createOrderFromCart() {
+    Order ord = Order();
+    int orderId = ord.createOrder(
+        DateTime.now(), totalCostOfCart(), totalUnitsInCart(), this);
+    return orderId;
+  }
+
+  void clearCart() {
+    _cartItems.forEach((ci) => ci.clearCartItem());
+    _cartItems = [];
     notifyListeners();
   }
 }

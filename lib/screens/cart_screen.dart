@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shopping_app/screens/product_screen.dart';
+import '../provider/order.dart';
+import '../widgets/drawer_shoppingApp.dart';
 import '../provider/cart.dart';
-import '../provider/cart_item.dart';
 import '../widgets/cart_item_widget.dart';
 
 class CartScreen extends StatelessWidget {
@@ -10,6 +12,7 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var cart = Provider.of<Cart>(context);
     return Scaffold(
+      drawer: DrawerShoppingApp(),
       appBar: AppBar(title: Text("My Cart")),
       body: Column(
         children: [
@@ -35,10 +38,30 @@ class CartScreen extends StatelessWidget {
                   return CartItemWidget(cart.cartItems[index]);
                 }),
           ),
-          Card(
-            child: ElevatedButton(
-              onPressed: () => {},
-              child: const Text("OrderNow"),
+          Visibility(
+            visible: cart.itemsInCart() > 0 ? true : false,
+            child: Card(
+              child: ElevatedButton(
+                child: const Text("OrderNow"),
+                onPressed: () {
+                  int orderId = cart.createOrderFromCart();
+                  cart.clearCart();
+                  AlertDialog(
+                    title: Text("Order Placed"),
+                    content: Text(
+                      "Your order ID $orderId is placed successfully.",
+                    ),
+                    actions: [
+                      TextButton(
+                          onPressed: () {
+                            Navigator.of(context)
+                                .pushReplacementNamed(ProductScreen.route);
+                          },
+                          child: Text("OK"))
+                    ],
+                  );
+                },
+              ),
             ),
           ),
           Spacer(),

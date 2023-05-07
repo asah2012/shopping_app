@@ -29,4 +29,8 @@ class CartItem {
   double totalPrice() {
     return qty * (productItem.price);
   }
+
+  void clearCartItem() {
+    _qty = 0;
+  }
 }

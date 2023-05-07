@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shopping_app/provider/cart.dart';
-import 'package:shopping_app/provider/cart_item.dart';
+import '../provider/cart.dart';
+import '../widgets/drawer_shoppingApp.dart';
 import './cart_screen.dart';
 import '../widgets/product_item.dart';
 import '../provider/products.dart';
@@ -34,6 +34,7 @@ class _ProductScreenState extends State<ProductScreen> {
     var tempProducts = Provider.of<Products>(context);
     setState(() => {if (!isFilterSet) productList = tempProducts.productList});
     return Scaffold(
+        drawer: DrawerShoppingApp(),
         appBar: AppBar(title: const Text("My Shopping App"), actions: [
           PopupMenuButton(
               onSelected: (value) => {
