@@ -23,9 +23,23 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Shopping App',
         theme: ThemeData(
-          primarySwatch: Colors.purple,
-          accentColor: Colors.deepOrange,
+          primarySwatch: Colors.pink,
+          accentColor: Colors.amber,
+          canvasColor: Color.fromRGBO(255, 254, 229, 1),
           fontFamily: 'Lato',
+          textTheme: const TextTheme(
+              titleLarge: TextStyle(
+                  fontFamily: 'Lato',
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold),
+              bodyLarge: TextStyle(
+                  fontFamily: 'Lato',
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold),
+              bodyMedium: TextStyle(
+                  fontFamily: 'Anton',
+                  fontSize: 14,
+                  fontWeight: FontWeight.normal)),
         ),
         home: ProductScreen(),
         routes: {

@@ -50,9 +50,11 @@ class _SingleOrderTileState extends State<SingleOrderTile> {
         if (!_showOrderItems)
           ListTile(
             contentPadding:
-                EdgeInsets.symmetric(vertical: 2.0, horizontal: 5.0),
+                EdgeInsets.symmetric(vertical: 2.0, horizontal: 10.0),
+            horizontalTitleGap: 50.0,
             tileColor: Colors.amberAccent,
-            leading: Text("Order# ${widget.myOrder.orderKey}"),
+            leading: Text("Order# ${widget.myOrder.orderKey}",
+                style: Theme.of(context).textTheme.titleLarge),
             title: Text(
               "\$${widget.myOrder.orderValue}      Units : ${widget.myOrder.orderUnits} ",
               style: Theme.of(context).textTheme.titleMedium,
